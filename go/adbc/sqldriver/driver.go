@@ -458,6 +458,9 @@ func arrFromVal(val any) arrow.Array {
 	case arrow.Date64:
 		dt = arrow.PrimitiveTypes.Date64
 		buffers[1] = memory.NewBufferBytes((*[8]byte)(unsafe.Pointer(&v))[:])
+	case arrow.Timestamp:
+		dt = arrow.FixedWidthTypes.Timestamp_us
+		buffers[1] = memory.NewBufferBytes((*[8]byte)(unsafe.Pointer(&v))[:])
 	case []byte:
 		dt = arrow.BinaryTypes.Binary
 		buffers[1] = memory.NewBufferBytes(arrow.Int32Traits.CastToBytes([]int32{0, int32(len(v))}))
